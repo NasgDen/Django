@@ -31,3 +31,14 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+class Contact(models.Model):
+    """ Описание полей контактных данных """
+
+    country = models.CharField(max_length=150, verbose_name='Страна')
+    itn = models.CharField(max_length=150, verbose_name='ИНН')
+    address = models.CharField(max_length=150, verbose_name='Адрес')
+
+    class Meta:
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
