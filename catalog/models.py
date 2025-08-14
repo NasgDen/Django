@@ -14,6 +14,7 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+
 class Product(models.Model):
     """ Описание полей модель товаров """
 
@@ -31,6 +32,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
 
 class Contact(models.Model):
     """ Описание полей контактных данных """
