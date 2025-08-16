@@ -8,7 +8,7 @@ def home(request):
     products = Product.objects.order_by('-id')[:5]
     for product in products:
         print(product.name)
-    return render(request, "home.html")
+    return render(request, "home.html", {"products": products})
 
 
 def contacts(request):
