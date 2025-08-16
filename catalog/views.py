@@ -20,3 +20,9 @@ def contacts(request):
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
     contacts = Contact.objects.get()
     return render(request, "contacts.html", {'contacts': contacts})
+
+
+def product(request, id):
+    """ Контроллер для отображения страницы с подробным описанием товара """
+    product = Product.objects.get(id=id)
+    return render(request, 'product.html', {'product': product})
