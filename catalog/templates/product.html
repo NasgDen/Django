@@ -3,10 +3,15 @@
 {% block title %}Информация о продукте{% endblock %}
 
 {% block content %}
-<p>Наименование: {{product.name}}</p>
-<p>Описание: {{product.description}}</p>
-<p>Категория: {{product.category}}</p>
-<p>Цена: {{product.price}}</p>
-<p>Дата создания: {{product.created_at | date:"d M Y"}} </p>
-<p>Дата изменения: {{product.created_ut}}</p>
+<div class="container">
+    <div style="width: 250px">
+        <img class="img-fluid" style="" src="{{product.image.url}}" alt="{{product.name}}">
+    </div>
+    <p>Наименование: {{product.name}}</p>
+    <p>Описание: {{product.description}}</p>
+    <p>Категория: {{product.category}}</p>
+    <p>Цена: {{product.price}}</p>
+    <p>Дата создания: {{product.created_at | date:"d M Y"}} </p>
+    <p>Дата изменения: {{product.created_ut}}</p>
+</div>
 {% endblock%}

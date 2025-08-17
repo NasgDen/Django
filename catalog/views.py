@@ -2,14 +2,18 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Product, Contact
 from .forms import ProductForm
+from django.core.paginator import Paginator
 
 
 def home(request):
     """ Контроллер для отображения страницы home.html """
-    products = Product.objects.order_by('-id')[:5]
-    for product in products:
-        print(product.name)
-    return render(request, "home.html", {"products": products})
+    products = Product.objects.all().order_by('-id')
+    paginator = Paginator(products, 5)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    # for product in products:
+    #     print(product.name)
+    return render(request, "home.html", {"page_object": page_object})
 
 
 def contacts(request):

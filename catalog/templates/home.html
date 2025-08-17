@@ -8,8 +8,9 @@
     <p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
         продать</p>
 </div>
-<div class="container">
-    {% for product in products %}
+
+<div>
+    {% for product in page_object %}
     <div class="row text-center">
         <div class="col-3">
             <div class="card mb-4 box-shadow">
@@ -17,10 +18,9 @@
                     <a class="text-decoration-none" href="product/{{product.pk}}">
                         <h4 class="my-0 font-weight-normal ">{{product.name}}</h4>
                     </a>
-
                 </div>
                 <div class="card-body">
-                    <img src={{product.image.url}} alt={{product.name}}>
+                    <img class="img-fluid" src={{product.image.url}} alt={{product.name}}>
                     <p>{{product.description|truncatechars:100}}</p>
                     <h1 class="card-title pricing-card-title">{{product.price}}</h1>
                     <a class="btn btn-lg btn-block btn-outline-primary" href="product/{{product.pk}}">Подробнее</a>
@@ -29,4 +29,24 @@
         </div>
     </div>
     {% endfor%}
+</div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_object.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ page_object.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_object.number }} из {{ page_object.paginator.num_pages }}.
+        </span>
+
+        {% if page_object.has_next %}
+            <a href="?page={{ page_object.next_page_number }}">следующая</a>
+            <a href="?page={{ page_object.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+
 {% endblock%}
