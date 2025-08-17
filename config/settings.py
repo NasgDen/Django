@@ -1,8 +1,8 @@
 import os
-from dotenv import load_dotenv
 from pathlib import Path
 
-from django.conf.global_settings import STATICFILES_DIRS, MEDIA_URL
+from django.conf.global_settings import MEDIA_URL, STATICFILES_DIRS
+from dotenv import load_dotenv
 
 load_dotenv(override=True)
 

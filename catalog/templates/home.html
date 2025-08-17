@@ -9,28 +9,30 @@
         продать</p>
 </div>
 
-<div>
+<div class="row">
     {% for product in page_object %}
-    <div class="row text-center">
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <a class="text-decoration-none" href="product/{{product.pk}}">
-                        <h4 class="my-0 font-weight-normal ">{{product.name}}</h4>
-                    </a>
+    <div class="col-sm-4 mb-5">
+        <div class="card">
+            <div class="card-header">
+                <a class="text-decoration-none" href="product/{{product.pk}}">
+                    <h4 class="my-0 font-weight-normal ">{{product.name}}</h4>
+                </a>
+            </div>
+            <div class="card-body">
+                <div style="width: 250px;">
+                    <img class="img-fluid" style="" src="{{product.image.url}}" alt="{{product.name}}">
                 </div>
-                <div class="card-body">
-                    <img class="img-fluid" src={{product.image.url}} alt={{product.name}}>
-                    <p>{{product.description|truncatechars:100}}</p>
-                    <h1 class="card-title pricing-card-title">{{product.price}}</h1>
-                    <a class="btn btn-lg btn-block btn-outline-primary" href="product/{{product.pk}}">Подробнее</a>
-                </div>
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description|truncatechars:100}}</p>
+                <h1 class="card-title pricing-card-title">{{product.price}}</h1>
+                <a href="product/{{product.pk}}" class="btn btn-primary">Подробнее</a>
             </div>
         </div>
     </div>
     {% endfor%}
 </div>
-    <div class="pagination">
+
+<div class="pagination">
     <span class="step-links">
         {% if page_object.has_previous %}
             <a href="?page=1">&laquo; первая</a>
@@ -46,7 +48,7 @@
             <a href="?page={{ page_object.paginator.num_pages }}">последняя &raquo;</a>
         {% endif %}
     </span>
-    </div>
+</div>
 
 
 {% endblock%}
