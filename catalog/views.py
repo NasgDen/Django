@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Product, Contact
+from .forms import ProductForm
 
 
 def home(request):
@@ -26,3 +27,19 @@ def product(request, id):
     """ Контроллер для отображения страницы с подробным описанием товара """
     product = Product.objects.get(id=id)
     return render(request, 'product.html', {'product': product})
+
+
+def add_product(request):
+    """ Контроллер для добавления товаров в базу данных"""
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request,'success.html')
+    else:
+        form = ProductForm()
+    return render(request, 'add_product.html', {'form': form})
+
+
+def success_view(request):
+    return render(request, 'success.html' )

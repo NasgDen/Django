@@ -20,7 +20,7 @@
 
                 </div>
                 <div class="card-body">
-                    <img src=/media/{{product.image}} alt={{product.name}}>
+                    <img src={{product.image.url}} alt={{product.name}}>
                     <p>{{product.description|truncatechars:100}}</p>
                     <h1 class="card-title pricing-card-title">{{product.price}}</h1>
                     <a class="btn btn-lg btn-block btn-outline-primary" href="product/{{product.pk}}">Подробнее</a>
