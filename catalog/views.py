@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .forms import ProductForm
 from .models import Contact, Product
@@ -11,6 +11,12 @@ class ProductListView(ListView):
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "catalog/product.html"
+    context_object_name = "product"
 
 
 
