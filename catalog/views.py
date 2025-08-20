@@ -1,10 +1,18 @@
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
-from .forms import ProductForm
+# from .forms import ProductForm
 from .models import Contact, Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ['name', 'description', 'image', 'category', 'price', ]
+    template_name = "catalog/add_product.html"
+    success_url = reverse_lazy("catalog:products")
 
 
 class ProductListView(ListView):
@@ -17,6 +25,12 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = "catalog/product.html"
     context_object_name = "product"
+
+
+class ContactView(ListView):
+    model = Contact
+    template_name = "catalog/contacts.html"
+    context_object_name = "contacts"
 
 
 

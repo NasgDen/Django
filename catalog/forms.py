@@ -3,8 +3,8 @@ from django import forms
 from .models import Product
 
 
-class ProductForm(forms.ModelForm):
-    class Meta:
-        model = Product
-        fields = ['name', 'description', 'image', 'category', 'price',]
-        widgets ={'image': forms.ClearableFileInput(attrs={'multiple': False})}
+# class ProductForm(forms.ModelForm):
+#     class Meta:
+#         model = Product
+#         fields = ['name', 'description', 'image', 'category', 'price',]
+#         widgets ={'image': forms.ClearableFileInput(attrs={'multiple': False})}
