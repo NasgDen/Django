@@ -27,10 +27,13 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
 
 
-class ContactView(ListView):
+class ContactListView(ListView):
     model = Contact
     template_name = "catalog/contacts.html"
     context_object_name = "contacts"
+
+    def get_queryset(self):
+        return Contact.objects.get()
 
 
 
