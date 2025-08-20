@@ -5,6 +5,7 @@ from .models import Contact, Product
 
 
 class ProductCreateView(CreateView):
+    """ Класс реализующий интерфейс для создания товара """
     model = Product
     fields = ['name', 'description', 'image', 'category', 'price', ]
     template_name = "catalog/add_product.html"
@@ -12,6 +13,7 @@ class ProductCreateView(CreateView):
 
 
 class ProductListView(ListView):
+    """ Класс реализующий интерфейс для отображения списка товаров """
     model = Product
     template_name = "catalog/home.html"
     context_object_name = "products"
@@ -19,16 +21,17 @@ class ProductListView(ListView):
 
 
 class ProductDetailView(DetailView):
+    """ Класс реализующий интерфейс для отображения детальной информации о товаре """
     model = Product
     template_name = "catalog/product.html"
     context_object_name = "product"
 
 
 class ContactListView(ListView):
+    """ Класс реализующий интерфейс для отображения списка контактов """
     model = Contact
     template_name = "catalog/contacts.html"
     context_object_name = "contacts"
 
     def get_queryset(self):
         return Contact.objects.get()
-
