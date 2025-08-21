@@ -28,6 +28,12 @@ class BlogDetailView(DetailView):
     template_name = 'blog/blog_detail.html'
     context_object_name = 'blog'
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.count_views += 1
+        self.object.save()
+        return self.object
+
 
 class BlogUpdateView(UpdateView):
     """ Класс реализующий интерфейс для редактирования блога """
