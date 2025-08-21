@@ -11,7 +11,8 @@
     <p>Наименование: {{blog.name}}</p>
     <p>Описание: {{blog.content}}</p>
     <p>Количество просмотров: {{blog.count_views}}</p>
-    <p>Дата создания: {{blog.created_at | date:"d M Y"}} </p>
+    <p>Дата создания: {{blog.created_at | date:"d M Y"}}</p>
+    <a href="{% url 'blogs:blog_delete' blog.pk %}" class="btn btn-danger">Удалить</a>
 </div>
 
 {% endblock %}

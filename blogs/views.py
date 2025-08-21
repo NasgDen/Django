@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from .models import Blog
 
 
@@ -22,7 +22,16 @@ class BlogCreateView(CreateView):
 
 
 class BlogDetailView(DetailView):
+    """ Класс реализующий интерфейс для детального просмотра блога """
 
     model = Blog
     template_name = 'blog/blog_detail.html'
     context_object_name = 'blog'
+
+class BlogDeleteView(DeleteView):
+    """ Класс реализующий интерфейс для удаления блога """
+
+    model = Blog
+    template_name = 'blog/blog_confirm_delete.html'
+    success_url = reverse_lazy("blogs:blogs")
+
