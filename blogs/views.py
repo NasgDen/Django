@@ -19,3 +19,10 @@ class BlogCreateView(CreateView):
     fields = ['name', 'content', 'image', 'is_published', 'count_views']
     template_name = 'blog/blog_create.html'
     success_url = reverse_lazy("blogs:blogs")
+
+
+class BlogDetailView(DetailView):
+
+    model = Blog
+    template_name = 'blog/blog_detail.html'
+    context_object_name = 'blog'

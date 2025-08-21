@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}{{blog.name}}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div style="width: 250px">
+        <img class="img-fluid" style="" src="{{blog.image.url}}" alt="{{blog.name}}">
+    </div>
+    <p>Наименование: {{blog.name}}</p>
+    <p>Описание: {{blog.content}}</p>
+    <p>Количество просмотров: {{blog.count_views}}</p>
+    <p>Дата создания: {{blog.created_at | date:"d M Y"}} </p>
+</div>
+
+{% endblock %}
