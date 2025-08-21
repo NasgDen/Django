@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-      БЛОГИ
-      {% for blog in blogs %}
-        <h1>{{blog.name}}</h1>
-        <p>{{blog.content}}</p>
+{% extends 'base.html' %}
 
-      {% endfor %}
-</body>
-</html>
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+
+<h>БЛОГИ</h>
+{% for blog in blogs %}
+    <h1>{{blog.name}}</h1>
+    <p>{{blog.content}}</p>
+{% endfor %}
+{% endblock %}
