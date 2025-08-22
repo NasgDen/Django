@@ -4,16 +4,14 @@
 
 {% block content %}
 
-<div class="container">
-    <div style="width: 250px">
-        <img class="img-fluid" style="" src="{{blog.image.url}}" alt="{{blog.name}}">
+<div class="card mb-3">
+    <img src="{{blog.image.url}}" class="card-img-top" alt="{{blog.name}}">
+    <div class="card-body">
+        <h5 class="card-title">{{blog.name}}</h5>
+        <p class="card-text">{{blog.content}}.</p>
+        <p class="card-text"><small class="text-body-secondary">Дата создания: {{blog.created_at | date:"d M Y"}}</small></p>
+        <a href="{% url 'blogs:blog_update' blog.pk %}" class="btn btn-primary">Изменить</a>
+        <a href="{% url 'blogs:blog_delete' blog.pk %}" class="btn btn-danger">Удалить</a>
     </div>
-    <p>Наименование: {{blog.name}}</p>
-    <p>Описание: {{blog.content}}</p>
-    <p>Количество просмотров: {{blog.count_views}}</p>
-    <p>Дата создания: {{blog.created_at | date:"d M Y"}}</p>
-    <a href="{% url 'blogs:blog_update' blog.pk %}" class="btn btn-primary">Изменить</a>
-    <a href="{% url 'blogs:blog_delete' blog.pk %}" class="btn btn-danger">Удалить</a>
 </div>
-
 {% endblock %}
