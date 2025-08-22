@@ -11,6 +11,9 @@ class BlogListView(ListView):
     template_name = 'blog/blog_list.html'
     context_object_name = 'blogs'
 
+    def get_queryset(self):
+        return Blog.objects.filter(is_published=True)
+
 
 class BlogCreateView(CreateView):
     """ Класс реализующий интерфейс для создания блога """
@@ -28,6 +31,7 @@ class BlogDetailView(DetailView):
     template_name = 'blog/blog_detail.html'
     context_object_name = 'blog'
 
+
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.count_views += 1
@@ -41,7 +45,10 @@ class BlogUpdateView(UpdateView):
     model = Blog
     fields = ['name', 'content', 'image', 'is_published']
     template_name = 'blog/blog_create.html'
-    success_url = reverse_lazy("blogs:blogs")
+
+    def get_success_url(self):
+        return  reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
+
 
 
 class BlogDeleteView(DeleteView):
