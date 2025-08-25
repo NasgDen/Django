@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if blog %}
+        <button type="submit">Изменить</button>
+    {% else %}
+        <button type="submit">Добавить</button>
+    {% endif %}
+</form>
+{% endblock %}

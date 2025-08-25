@@ -10,7 +10,7 @@
 </div>
 
 <div class="row">
-    {% for product in page_object %}
+    {% for product in products %}
     <div class="col-sm-4 mb-5">
         <div class="card">
             <div class="card-header">
@@ -34,18 +34,18 @@
 
 <div class="pagination">
     <span class="step-links">
-        {% if page_object.has_previous %}
+        {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; первая</a>
-            <a href="?page={{ page_object.previous_page_number }}">предыдущая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
         {% endif %}
 
         <span class="current">
-            Страница {{ page_object.number }} из {{ page_object.paginator.num_pages }}.
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
         </span>
 
-        {% if page_object.has_next %}
-            <a href="?page={{ page_object.next_page_number }}">следующая</a>
-            <a href="?page={{ page_object.paginator.num_pages }}">последняя &raquo;</a>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
         {% endif %}
     </span>
 </div>
