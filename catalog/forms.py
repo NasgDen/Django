@@ -30,5 +30,12 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError('Поле "Описание" не должно содержать запрещенные слова')
         return description
 
+    def clean_price(self):
+        """ Метод проверяет валидацию поля price на положительное значение """
+
+        price = self.cleaned_data.get('price')
+        if price < 0:
+            raise ValidationError('Цена не может быть отрицательным значением')
+        return price
 
 
