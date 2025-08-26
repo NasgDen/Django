@@ -3,11 +3,21 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-<h1>ФОРМА ДОБАВЛЕНИЯ ТОВАРА</h1>
+<h1>
+  {% if product %}
+    ФОРМА ИЗМЕНЕНИЯ ТОВАРА
+  {% else %}
+    ФОРМА ДОБАВЛЕНИЯ ТОВАРА
+  {% endif %}
+</h1>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Добавить</button>
+  {% if product %}
+    <button type="submit" class="btn btn-primary">Изменить</button>
+  {% else %}
+    <button type="submit" class="btn btn-primary">Добавить</button>
+  {% endif %}
 </form>
 
 {% endblock %}
