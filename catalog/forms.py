@@ -5,39 +5,49 @@ from .models import Product
 
 FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for fild_name, field in self.fields.items():
+            field.widget.attrs['class'] = "form-control"
+            if fild_name =='name':
+                field.widget.attrs['placeholder'] = "Введите название товара"
+            elif fild_name =='description':
+                field.widget.attrs['placeholder'] = "Введите описание товара"
 
-class ProductForm(forms.ModelForm):
+
+class ProductForm(StyleFormMixin, forms.ModelForm):
     """ Класс реализующий интерфейс формы для продукта """
     class Meta:
         model = Product
         fields = ['name', 'description', 'image', 'category', 'price', ]
 
-    def __init__(self, *args, **kwargs):
-        """ Настройка атрибутов виджета """
-
-        super(ProductForm, self).__init__(*args, **kwargs)
-
-        self.fields['name'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Введите название товара'
-        })
-
-        self.fields['description'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Введите описание товара'
-        })
-
-        self.fields['image'].widget.attrs.update({
-            'class': 'form-control'
-        })
-
-        self.fields['category'].widget.attrs.update({
-            'class': 'form-control',
-        })
-
-        self.fields['price'].widget.attrs.update({
-            'class': 'form-control',
-        })
+    # def __init__(self, *args, **kwargs):
+    #     """ Настройка атрибутов виджета """
+    #
+    #     super(ProductForm, self).__init__(*args, **kwargs)
+    #
+    #     self.fields['name'].widget.attrs.update({
+    #         # 'class': 'form-control',
+    #         'placeholder': 'Введите название товара'
+    #     })
+    #
+    #     self.fields['description'].widget.attrs.update({
+    #         # 'class': 'form-control',
+    #         'placeholder': 'Введите описание товара'
+    #     })
+    #
+    #     # self.fields['image'].widget.attrs.update({
+    #     #     'class': 'form-control'
+    #     # })
+    #     #
+    #     # self.fields['category'].widget.attrs.update({
+    #     #     'class': 'form-control',
+    #     # })
+    #     #
+    #     # self.fields['price'].widget.attrs.update({
+    #     #     'class': 'form-control',
+    #     # })
 
 
     def clean_name(self):
