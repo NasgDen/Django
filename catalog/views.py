@@ -27,6 +27,7 @@ class ProductDeleteView(DeleteView):
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:products")
 
+
 class ProductListView(ListView):
     """ Класс реализующий интерфейс для отображения списка товаров """
     model = Product
