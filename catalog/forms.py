@@ -62,8 +62,26 @@ class ProductForm(forms.ModelForm):
         """ Метод проверяет валидацию поля price на положительное значение """
 
         price = self.cleaned_data.get('price')
+        print('ЦЕНА',price)
         if price < 0:
             raise ValidationError('Цена не может быть отрицательным значением')
         return price
 
+
+    def clean_image(self):
+        """ Метод проверяет формат и размер загружаемого изображения """
+
+        allowed_format_image = ['jpg', 'jpeg', 'png']
+        image = self.cleaned_data.get('image')
+        print(type(image))
+        print('Изображение ',image)
+        if image:
+            image_format = image.name.split('.')[-1]
+            print('Формат ',image_format)
+            print('Размер ', image.size)
+            if image.size > 5242880:
+                raise ValidationError(f'Файл изображения превышает размер 5Мб. Размер изображения = {round(image.size / 1048576, 2)} Мб.')
+            if image_format not in allowed_format_image:
+                raise ValidationError('Неправильный формат изображение. Необходимый формат: jpg, jpeg, png')
+        return image
 
