@@ -1,14 +1,30 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
+from .forms import ProductForm
 from .models import Contact, Product
 
 
 class ProductCreateView(CreateView):
     """ Класс реализующий интерфейс для создания товара """
     model = Product
-    fields = ['name', 'description', 'image', 'category', 'price', ]
+    form_class = ProductForm
     template_name = "catalog/add_product.html"
+    success_url = reverse_lazy("catalog:products")
+
+
+class ProductUpdateView(UpdateView):
+    """ Класс реализующий интерфейс для изменения товара """
+    model = Product
+    form_class = ProductForm
+    template_name = "catalog/add_product.html"
+    success_url = reverse_lazy("catalog:products")
+
+
+class ProductDeleteView(DeleteView):
+    """ Класс реализующий интерфейс для удаления товара """
+    model = Product
+    template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:products")
 
 

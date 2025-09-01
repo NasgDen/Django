@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+
 from .models import Blog
 
 
@@ -31,7 +32,6 @@ class BlogDetailView(DetailView):
     template_name = 'blog/blog_detail.html'
     context_object_name = 'blog'
 
-
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.count_views += 1
@@ -47,8 +47,7 @@ class BlogUpdateView(UpdateView):
     template_name = 'blog/blog_create.html'
 
     def get_success_url(self):
-        return  reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
-
+        return reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
 
 
 class BlogDeleteView(DeleteView):
@@ -57,4 +56,3 @@ class BlogDeleteView(DeleteView):
     model = Blog
     template_name = 'blog/blog_confirm_delete.html'
     success_url = reverse_lazy("blogs:blogs")
-
