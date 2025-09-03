@@ -1,13 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
+from catalog.forms import StyleFormMixin
 from .models import CustomUser
 
-class CustomUserCreationForm(UserCreationForm):
+class CustomUserCreationForm(StyleFormMixin, UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('email', 'username', 'first_name', 'last_name', 'phone_number', 'password1', 'password2')
+        fields = ('email', 'password1', 'password2')
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
