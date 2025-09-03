@@ -107,3 +107,5 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_REDIRECT_URL = 'catalog:products'
 LOGOUT_REDIRECT_URL = 'catalog:products'
+
+LOGIN_URL = 'users:login'
