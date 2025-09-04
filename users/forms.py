@@ -1,8 +1,10 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm, UserCreationForm
 
 from catalog.forms import StyleFormMixin
+
 from .models import CustomUser
+
 
 class CustomUserCreationForm(StyleFormMixin, UserCreationForm):
 
@@ -21,3 +23,8 @@ class CustomProfileForm(StyleFormMixin, UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ['email', 'username', 'first_name', 'last_name', 'phone_number']
+
+
+class UserPasswordChangeForm(StyleFormMixin, PasswordChangeForm):
+    class Meta:
+        model = CustomUser

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from django.conf.global_settings import MEDIA_URL, STATICFILES_DIRS, AUTH_USER_MODEL
+from django.conf.global_settings import AUTH_USER_MODEL, MEDIA_URL, STATICFILES_DIRS
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
