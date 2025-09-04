@@ -24,7 +24,7 @@
     </div>
     {% if user.is_authenticated %}
     <div class="d-flex justify-content-end">
-        <p class="ms-3 my-0 mr-md-auto font-weight-normal">Пользователь: {{user.email}}</p>
+        <a class="ms-3 my-0 mr-md-auto font-weight-normal text-decoration-none" href="/users/edit_user/{{user.pk}}/">Пользователь: {{user.email}}</a>
     </div>
     {% endif %}
 </div>

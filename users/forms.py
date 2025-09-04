@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from catalog.forms import StyleFormMixin
 from .models import CustomUser
@@ -15,3 +15,9 @@ class CustomUserCreationForm(StyleFormMixin, UserCreationForm):
         if phone_number and not phone_number.isdigit():
             raise forms.ValidationError('Телефонный номер должен состоять только из цифр')
         return phone_number
+
+
+class CustomProfileForm(StyleFormMixin, UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'first_name', 'last_name', 'phone_number']

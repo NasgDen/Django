@@ -1,12 +1,15 @@
 from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomProfileForm
 from config.settings import EMAIL_HOST_USER, EMAIL_USE_TLS, EMAIL_USE_SSL
+from .models import CustomUser
 
 
 class RegistrationView(CreateView):
+    """ Контроллер для регистрации пользователя """
     template_name = 'users/registration.html'
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('catalog:products')
@@ -26,3 +29,10 @@ class RegistrationView(CreateView):
         from_email = EMAIL_HOST_USER
         recipient_list = [user_email]
         send_mail(subject, message, from_email, recipient_list)
+
+class EditCustomUser(UpdateView):
+    """ Контроллер для редактирования профиля пользователя """
+    model = CustomUser
+    template_name = 'users/edit_user.html'
+    form_class =  CustomProfileForm
+    success_url = reverse_lazy('catalog:products')
