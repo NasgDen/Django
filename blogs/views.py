@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
@@ -16,7 +17,7 @@ class BlogListView(ListView):
         return Blog.objects.filter(is_published=True)
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     """ Класс реализующий интерфейс для создания блога """
 
     model = Blog
@@ -39,7 +40,7 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     """ Класс реализующий интерфейс для редактирования блога """
 
     model = Blog
@@ -50,7 +51,7 @@ class BlogUpdateView(UpdateView):
         return reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     """ Класс реализующий интерфейс для удаления блога """
 
     model = Blog

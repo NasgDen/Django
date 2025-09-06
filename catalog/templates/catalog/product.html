@@ -13,7 +13,9 @@
     <p>Цена: {{product.price}}</p>
     <p>Дата создания: {{product.created_at | date:"d M Y"}} </p>
     <p>Дата изменения: {{product.created_ut}}</p>
+    {% if user.is_authenticated %}
     <a class="p-2 btn btn-primary" href="{% url 'catalog:update_product' product.pk %}">Изменить</a>
     <a class="p-2 btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}">Удалить</a>
+    {% endif %}
 </div>
 {% endblock%}

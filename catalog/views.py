@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -5,7 +6,7 @@ from .forms import ProductForm
 from .models import Contact, Product
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """ Класс реализующий интерфейс для создания товара """
     model = Product
     form_class = ProductForm
@@ -13,7 +14,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy("catalog:products")
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """ Класс реализующий интерфейс для изменения товара """
     model = Product
     form_class = ProductForm
@@ -21,7 +22,7 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy("catalog:products")
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """ Класс реализующий интерфейс для удаления товара """
     model = Product
     template_name = "catalog/product_confirm_delete.html"
