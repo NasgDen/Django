@@ -15,13 +15,15 @@ class StyleFormMixin:
                 field.widget.attrs['placeholder'] = "Введите название товара"
             elif fild_name == 'description':
                 field.widget.attrs['placeholder'] = "Введите описание товара"
+            elif fild_name == 'is_published':
+                field.widget.attrs['class'] = "form-check-input"
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     """ Класс реализующий интерфейс формы для продукта """
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'category', 'price', ]
+        fields = ['name', 'description', 'image', 'category', 'price',]
 
     def clean_name(self):
         """ Метод проверяет валидацию поля name на запрещенные слова """
@@ -61,3 +63,10 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             if image_format not in allowed_format_image:
                 raise ValidationError('Неправильный формат изображение. Необходимый формат: jpg, jpeg, png')
         return image
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """ Класс реализующий интерфейс формы модераторов """
+    class Meta:
+        model = Product
+        fields = ['is_published',]
