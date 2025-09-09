@@ -13,6 +13,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = "catalog/add_product.html"
     success_url = reverse_lazy("catalog:products")
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """ Класс реализующий интерфейс для изменения товара """
