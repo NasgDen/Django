@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
@@ -22,12 +23,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PublishProductView(View):
+class PublishProductView(LoginRequiredMixin, View):
     """ Класс реализующий интерфейс для публикации товара """
 
     def post(self, request, *args, **kwargs):
         product_id = kwargs["pk"]
         product = get_object_or_404(Product, id=product_id)
+        if not request.user.has_perm('catalog.can_unpublish_product'):
+            return HttpResponseForbidden("У вас нет прав для публикации товара.")
         if product.is_published:
             product.is_published = False
         else:
@@ -59,6 +62,12 @@ class ProductListView(ListView):
     template_name = "catalog/home.html"
     context_object_name = "products"
     paginate_by = 5
+
+    def get_queryset(self):
+        if self.request.user.has_perm('catalog.can_unpublish_product'):
+            return Product.objects.all()
+        else:
+            return  Product.objects.filter(is_published=True)
 
 
 class ProductDetailView(DetailView):
