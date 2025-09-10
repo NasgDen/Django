@@ -63,10 +63,3 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
             if image_format not in allowed_format_image:
                 raise ValidationError('Неправильный формат изображение. Необходимый формат: jpg, jpeg, png')
         return image
-
-
-class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
-    """ Класс реализующий интерфейс формы модераторов """
-    class Meta:
-        model = Product
-        fields = ['is_published',]

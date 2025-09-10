@@ -13,12 +13,29 @@
     <p>Цена: {{product.price}}</p>
     <p>Дата создания: {{product.created_at | date:"d M Y"}} </p>
     <p>Дата изменения: {{product.created_ut}}</p>
-    {% if user.is_authenticated %}
-    <a class="p-2 btn btn-primary" href="{% url 'catalog:update_product' product.pk %}">Изменить</a>
-    {% endif %}
-    {% if "catalog.delete_product" in perms %}
-    <a class="p-2 btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}">Удалить</a>
+    {% if product.is_published %}
+        <p class="text-success">Статус: опубликовано</p>
+    {% else %}
+        <p class="text-danger">Статус: не опубликовано</p>
     {% endif %}
 
+    {% if product.owner == user %}
+        <a class="p-2 btn btn-primary" href="{% url 'catalog:update_product' product.pk %}">Изменить</a>
+    {% endif %}
+
+    {% if "catalog.delete_product" in perms %}
+        <a class="p-2 btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}">Удалить</a>
+    {% endif %}
+
+    {% if "catalog.can_unpublish_product" in perms %}
+    <form action="{% url 'catalog:published_product' product.id %}" method="post">
+        {% csrf_token %}
+            {% if product.is_published %}
+                <button type="submit" class="mt-2 btn btn-danger">Отменить публикацию</button>
+            {% else %}
+                <button type="submit" class="mt-2 btn btn-primary">Опубликовать</button>
+            {% endif %}
+    </form>
+    {% endif %}
 </div>
 {% endblock%}

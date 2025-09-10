@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
-from .forms import ProductForm, ProductModeratorForm
+from .forms import ProductForm
 from .models import Contact, Product
 
 
@@ -21,6 +22,20 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+class PublishProductView(View):
+    """ Класс реализующий интерфейс для публикации товара """
+
+    def post(self, request, *args, **kwargs):
+        product_id = kwargs["pk"]
+        product = get_object_or_404(Product, id=product_id)
+        if product.is_published:
+            product.is_published = False
+        else:
+            product.is_published = True
+        product.save()
+
+        return redirect('catalog:product_detail', pk=product_id)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """ Класс реализующий интерфейс для изменения товара """
@@ -28,13 +43,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     template_name = "catalog/add_product.html"
     success_url = reverse_lazy("catalog:products")
-
-    def get_form_class(self):
-        user = self.request.user
-        if user.has_perm("catalog.can_unpublish_product"):
-            return ProductModeratorForm
-        else:
-            return ProductForm
 
 
 class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
