@@ -23,7 +23,7 @@
         <a class="p-2 btn btn-primary" href="{% url 'catalog:update_product' product.pk %}">Изменить</a>
     {% endif %}
 
-    {% if "catalog.delete_product" in perms %}
+    {% if "catalog.delete_product" in perms or product.owner == user%}
         <a class="p-2 btn btn-danger" href="{% url 'catalog:delete_product' product.pk %}">Удалить</a>
     {% endif %}
 
