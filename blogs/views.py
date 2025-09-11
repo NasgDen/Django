@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
@@ -17,11 +17,12 @@ class BlogListView(ListView):
         return Blog.objects.filter(is_published=True)
 
 
-class BlogCreateView(LoginRequiredMixin, CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """ Класс реализующий интерфейс для создания блога """
 
     model = Blog
     fields = ['name', 'content', 'image', 'is_published']
+    permission_required = "blogs.add_blog"
     template_name = 'blog/blog_create.html'
     success_url = reverse_lazy("blogs:blogs")
 
@@ -40,10 +41,11 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(LoginRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """ Класс реализующий интерфейс для редактирования блога """
 
     model = Blog
+    permission_required = "blogs.change_blog"
     fields = ['name', 'content', 'image', 'is_published']
     template_name = 'blog/blog_create.html'
 
@@ -51,9 +53,10 @@ class BlogUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("blogs:blog_detail", kwargs={'pk': self.object.pk})
 
 
-class BlogDeleteView(LoginRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """ Класс реализующий интерфейс для удаления блога """
 
     model = Blog
+    permission_required = "blogs.delete_blog"
     template_name = 'blog/blog_confirm_delete.html'
     success_url = reverse_lazy("blogs:blogs")

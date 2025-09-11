@@ -1,5 +1,7 @@
 from django.db import models
+
 from users.models import CustomUser
+
 
 class Category(models.Model):
     """ Описание полей модель категорий товаров """

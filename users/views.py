@@ -38,7 +38,7 @@ class EditCustomUser(UpdateView):
     """ Контроллер для редактирования профиля пользователя """
     model = CustomUser
     template_name = 'users/edit_user.html'
-    form_class =  CustomProfileForm
+    form_class = CustomProfileForm
     success_url = reverse_lazy('catalog:products')
 
 

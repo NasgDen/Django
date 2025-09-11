@@ -67,7 +67,7 @@ class ProductListView(ListView):
         if self.request.user.has_perm('catalog.can_unpublish_product'):
             return Product.objects.all()
         else:
-            return  Product.objects.filter(is_published=True)
+            return Product.objects.filter(is_published=True)
 
 
 class ProductDetailView(DetailView):
