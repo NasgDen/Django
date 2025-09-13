@@ -65,10 +65,12 @@ class ProductListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        if self.request.user.has_perm('catalog.can_unpublish_product'):
-            return Product.objects.all()
-        else:
-            return Product.objects.filter(is_published=True)
+        permission =  self.request.user.has_perm('catalog.can_unpublish_product')
+        return ProductService.get_product_from_cache(permission)
+
+        #     return Product.objects.all()
+        # else:
+        #     return Product.objects.filter(is_published=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

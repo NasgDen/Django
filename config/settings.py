@@ -122,9 +122,9 @@ DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 CACHE_ENABLE = True
 
 if CACHE_ENABLE:
-    CASHES = {
+    CACHES = {
         'default': {
-            'BACKEND': 'django.core.cache.backends.radis.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/1',
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv('LOCATION'),
         }
     }
