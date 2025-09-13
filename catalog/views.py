@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
 from .forms import ProductForm
-from .models import Contact, Product, Category
+from .models import Category, Contact, Product
 from .services import ProductService
 
 
@@ -65,12 +65,8 @@ class ProductListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        permission =  self.request.user.has_perm('catalog.can_unpublish_product')
+        permission = self.request.user.has_perm('catalog.can_unpublish_product')
         return ProductService.get_product_from_cache(permission)
-
-        #     return Product.objects.all()
-        # else:
-        #     return Product.objects.filter(is_published=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,8 +90,6 @@ class ProductCategoryView(DetailView):
         category = self.object.id
         context["products"] = ProductService.list_product_by_category(category)
         return context
-
-
 
 
 class ContactListView(ListView):

@@ -1,7 +1,9 @@
 from django.core.cache import cache
 
 from config.settings import CACHE_ENABLE
+
 from .models import Product
+
 
 class ProductService:
     """ Класс реализующий интерфейс сервисных функций """
@@ -23,7 +25,7 @@ class ProductService:
         key_all = "product_list_all"
         key_is_published = "product_list_is_published"
 
-        if  permission:
+        if permission:
             products = cache.get(key_all)
             if products is not None:
                 return products
@@ -40,5 +42,3 @@ class ProductService:
                 products = Product.objects.filter(is_published=True)
                 cache.set('key_is_published', products, 60 * 15)
                 return products
-
-
