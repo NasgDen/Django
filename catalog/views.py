@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
 from .forms import ProductForm
-from .models import Contact, Product
+from .models import Contact, Product, Category
+from .services import ProductService
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -69,12 +70,30 @@ class ProductListView(ListView):
         else:
             return Product.objects.filter(is_published=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
 
 class ProductDetailView(DetailView):
     """ Класс реализующий интерфейс для отображения детальной информации о товаре """
     model = Product
     template_name = "catalog/product.html"
     context_object_name = "product"
+
+
+class ProductCategoryView(DetailView):
+    model = Category
+    template_name = "catalog/product_by_category.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.object.id
+        context["products"] = ProductService.list_product_by_category(category)
+        return context
+
+
 
 
 class ContactListView(ListView):
