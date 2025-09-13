@@ -15,13 +15,15 @@ class StyleFormMixin:
                 field.widget.attrs['placeholder'] = "Введите название товара"
             elif fild_name == 'description':
                 field.widget.attrs['placeholder'] = "Введите описание товара"
+            elif fild_name == 'is_published':
+                field.widget.attrs['class'] = "form-check-input"
 
 
 class ProductForm(StyleFormMixin, forms.ModelForm):
     """ Класс реализующий интерфейс формы для продукта """
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'category', 'price', ]
+        fields = ['name', 'description', 'image', 'category', 'price',]
 
     def clean_name(self):
         """ Метод проверяет валидацию поля name на запрещенные слова """

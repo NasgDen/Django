@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import CustomUser
+
 
 class Category(models.Model):
     """ Описание полей модель категорий товаров """
@@ -23,6 +25,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='images/', verbose_name='Изображение')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', verbose_name='Категория')
     price = models.IntegerField(verbose_name='Цена')
+    is_published = models.BooleanField(default=False, verbose_name="Статус публикации")
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='products', verbose_name='Владелец', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_ut = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
@@ -32,6 +36,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        permissions = [('can_unpublish_product', 'can unpublish product')]
 
 
 class Contact(models.Model):
