@@ -119,9 +119,12 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 
-CASHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.radis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
+CACHE_ENABLE = True
+
+if CACHE_ENABLE:
+    CASHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.radis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+        }
     }
-}
